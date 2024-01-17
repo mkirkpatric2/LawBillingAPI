@@ -2,6 +2,7 @@ package com.example.billingdemo;
 
 import com.example.billingdemo.ClientEntities.ClientLit;
 import com.example.billingdemo.ClientEntities.ClientTx;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -43,8 +44,11 @@ public class ClientController {
         return ResponseEntity.ok(clientService.postClientTx(tx));
     }
 
-    @GetMapping(path="/allBills/{id}")
-    public ResponseEntity<ResultSet> getAllBillsByClient(@PathVariable int id){
-        return ResponseEntity.ok(clientService.getAllBills(id));
+    // Returning string for now.
+    // I've learned Spring doesn't serialize JSON, so my efforts to convert ResultSet to JSON
+    // could have been better spent.
+    @GetMapping(path="/allBillsTx/{id}")
+    public ResponseEntity<String> getAllBillsByClient(@PathVariable int id){
+        return ResponseEntity.ok(ClientTx.getAllBills(id).toString());
     }
 }

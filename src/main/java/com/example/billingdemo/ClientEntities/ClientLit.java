@@ -2,7 +2,7 @@ package com.example.billingdemo.ClientEntities;
 
 import java.util.ArrayList;
 
-public class ClientLit implements ClientInterface {
+public class ClientLit {
 
     private Integer clientCode;
     private String clientName;
@@ -10,22 +10,16 @@ public class ClientLit implements ClientInterface {
     private Integer leadAttorney;
     private String clientPhoneNo;
 
-    @Override
     public ArrayList<Object> getUnpaidBills() {
         return null;
     }
 
-    @Override
-    public ArrayList<Object> getMonthBills() {
-        return null;
-    }
 
-    @Override
     public ArrayList<Object> getPaidBills() {
         return null;
     }
 
-    @Override
+
     public ArrayList<Object> getAllBills() {
         return null;
     }

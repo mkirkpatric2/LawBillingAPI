@@ -1,8 +1,14 @@
 package com.example.billingdemo.ClientEntities;
 
+import com.example.billingdemo.ClientService;
+import org.json.JSONArray;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ClientTx implements ClientInterface {
+public class ClientTx{
 
     private Integer clientCode;
     private String clientName;
@@ -10,24 +16,51 @@ public class ClientTx implements ClientInterface {
     private Integer leadAttorney;
     private String clientPhoneNo;
 
-    @Override
+
     public ArrayList<Object> getUnpaidBills() {
         return null;
     }
 
-    @Override
+
     public ArrayList<Object> getMonthBills() {
         return null;
     }
 
-    @Override
+
     public ArrayList<Object> getPaidBills() {
         return null;
     }
 
-    @Override
-    public ArrayList<Object> getAllBills() {
-        return null;
+
+    public static JSONArray getAllBills(int id){
+        Connection conn = ClientHelpers.sqlStartConn();
+
+        try {
+            // execute sql query and close connection
+            Statement sql = conn.createStatement();
+            ResultSet sqlOutput = sql.executeQuery(
+                    "SELECT a.id, b.name, a.details, a.hours,\n" +
+                            "       CASE\n" +
+                            "           WHEN b.attorney=false THEN b.hourlyrate*.75\n" +
+                            "           ELSE b.hourlyrate\n" +
+                            "       END AS rate,\n" +
+                            "       ROUND(CASE\n" +
+                            "           WHEN b.attorney=false THEN b.hourlyrate*.75*a.hours\n" +
+                            "           ELSE b.hourlyrate*a.hours\n" +
+                            "       END, 2) AS subtotal\n" +
+                            "FROM bills a\n" +
+                            "JOIN billers b ON a.biller = b.id\n" +
+                            "WHERE clientcode = "
+                            + id + ";");
+            JSONArray jsonOutput = ClientHelpers.sqlToJSON(sqlOutput);
+            conn.close();
+            sql.close();
+            System.out.println(jsonOutput);
+            return jsonOutput;
+        } catch(Exception e) {
+            System.out.println(e.fillInStackTrace().toString());
+            return null;
+        }
     }
 
     public Integer getClientCode() {
