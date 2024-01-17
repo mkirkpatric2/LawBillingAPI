@@ -1,5 +1,10 @@
 package com.example.billingdemo.ClientEntities;
 
+import org.json.JSONArray;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ClientLit {
@@ -9,6 +14,7 @@ public class ClientLit {
     private Boolean isActive;
     private Integer leadAttorney;
     private String clientPhoneNo;
+    private Boolean isLit = true;
 
     public ArrayList<Object> getUnpaidBills() {
         return null;
@@ -20,8 +26,27 @@ public class ClientLit {
     }
 
 
-    public ArrayList<Object> getAllBills() {
-        return null;
+    public static JSONArray getAllBills(int id){
+        Connection conn = ClientHelpers.sqlStartConn();
+
+        try {
+            // execute sql query and close connection
+            Statement sql = conn.createStatement();
+            ResultSet sqlOutput = sql.executeQuery(
+                    "SELECT a.id, b.name, a.details, a.hours, b.hourlyrate as rate,\n" +
+                            "       ROUND(b.hourlyrate*a.hours, 2) AS subtotal\n" +
+                            "FROM bills a\n" +
+                            "         JOIN billers b ON a.biller = b.id\n" +
+                            "WHERE clientcode = "+ id + ";");
+            JSONArray jsonOutput = ClientHelpers.sqlToJSON(sqlOutput);
+            conn.close();
+            sql.close();
+            System.out.println(jsonOutput);
+            return jsonOutput;
+        } catch(Exception e) {
+            System.out.println(e.fillInStackTrace().toString());
+            return null;
+        }
     }
 
     public Integer getClientCode() {
@@ -62,5 +87,13 @@ public class ClientLit {
 
     public void setClientPhoneNo(String clientPhoneNo) {
         this.clientPhoneNo = clientPhoneNo;
+    }
+
+    public Boolean getisLit() {
+        return isLit;
+    }
+
+    public void setisLit(Boolean lit) {
+        isLit = lit;
     }
 }

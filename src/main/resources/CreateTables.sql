@@ -12,7 +12,8 @@ CREATE TABLE bills (
     clientcode INT NOT NULL,
     biller INT NOT NULL,
     hours NUMERIC(3, 2) NOT NULL,
-    details VARCHAR(100) NOT NULL
+    details VARCHAR(100) NOT NULL,
+    paid BOOLEAN NOT NULL
 );
 
 CREATE TABLE billers (

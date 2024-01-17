@@ -24,12 +24,12 @@ public class ClientController {
 
     @GetMapping(path="/clients")
     public ResponseEntity<String> getClients(){
-        return ResponseEntity.ok("clients");
+        return ResponseEntity.ok(clientService.getAllClients().toString());
     }
 
     @GetMapping(path="/client/{id}")
     public ResponseEntity<String> getClient(@PathVariable int id){
-        return ResponseEntity.ok("client" + id);
+        return ResponseEntity.ok(clientService.getClientById(id).toString());
     }
 
     @PostMapping(path="/newLitClient")
@@ -48,7 +48,13 @@ public class ClientController {
     // I've learned Spring doesn't serialize JSON, so my efforts to convert ResultSet to JSON
     // could have been better spent.
     @GetMapping(path="/allBillsTx/{id}")
-    public ResponseEntity<String> getAllBillsByClient(@PathVariable int id){
+    public ResponseEntity<String> getAllTxBillsByClient(@PathVariable int id){
         return ResponseEntity.ok(ClientTx.getAllBills(id).toString());
+    }
+
+    // Again, there is no real reason for me to split these the way the api is built right now.
+    @GetMapping(path="/allBillsLit/{id}")
+    public ResponseEntity<String> getAllLitBillsByClient(@PathVariable int id){
+        return ResponseEntity.ok(ClientLit.getAllBills(id).toString());
     }
 }

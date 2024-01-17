@@ -1,15 +1,15 @@
-INSERT INTO bills (clientcode, biller, hours, details)
+INSERT INTO bills (clientcode, biller, hours, details, paid)
 VALUES
-    (1, 1, 1.4, 'reviewed complaint'),
-    (1, 1, 2.5, 'drafted answer'),
-    (1, 2, 1.8, 'edited answer'),
-    (1, 3, 3.7, 'reviewed affidavit exhibits'),
-    (1, 4, 4.4, 'compiled affidavit exhibits'),
-    (2, 1, 2.2, 'reviewed depo transcript'),
-    (3, 2, 1.5, 'preliminary hearing attendance'),
-    (4, 4, 0.5, 'collated defense depo exhibits'),
-    (5, 4, 1.2, 'Prepared response to rogs'),
-    (6, 3, 0.3, 'prepared exhibits to motion')
+    (1, 1, 1.4, 'reviewed complaint', true),
+    (1, 1, 2.5, 'drafted answer', true),
+    (1, 2, 1.8, 'edited answer', false),
+    (1, 3, 3.7, 'reviewed affidavit exhibits', false),
+    (1, 4, 4.4, 'compiled affidavit exhibits', false),
+    (2, 1, 2.2, 'reviewed depo transcript', true),
+    (3, 2, 1.5, 'preliminary hearing attendance', false),
+    (4, 4, 0.5, 'collated defense depo exhibits', false),
+    (5, 4, 1.2, 'Prepared response to rogs', false),
+    (6, 3, 0.3, 'prepared exhibits to motion', true)
 ;
 
 INSERT INTO clients (clientname, isactive, leadattorney, clientphoneno, islit)

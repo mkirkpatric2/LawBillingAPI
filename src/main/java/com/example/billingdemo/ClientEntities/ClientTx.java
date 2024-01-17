@@ -15,6 +15,7 @@ public class ClientTx{
     private Boolean isActive;
     private Integer leadAttorney;
     private String clientPhoneNo;
+    private Boolean isLit = false;
 
 
     public ArrayList<Object> getUnpaidBills() {
@@ -101,5 +102,13 @@ public class ClientTx{
 
     public void setClientPhoneNo(String clientPhoneNo) {
         this.clientPhoneNo = clientPhoneNo;
+    }
+
+    public Boolean getisLit() {
+        return isLit;
+    }
+
+    public void setisLit(Boolean lit) {
+        isLit = lit;
     }
 }
